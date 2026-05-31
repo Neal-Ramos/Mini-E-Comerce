@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgres"
+}
+
+model User {
+  Id Int @id @default(autoincrement())
+  UserId String @unique @default(uuid())
+  FirstName String
+  MiddleName String?
+  LastName String
+  Email String
+  Password String
+  ContactNumber String
+  BirthDay DateTime
+  DateCreated DateTime
+  RefreshToken RefreshToken[]
+
+  @@index([UserId, Email, Password, FirstName, LastName])
+}
+model RefreshToken {
+  Id Int @id @default(autoincrement())
+  Token String @unique @default(uuid())
+  ExpiryDate DateTime
+  DateCreated DateTime
+  UserId String?
+  User User? @relation(fields: [UserId], references: [UserId], onDelete: SetNull, onUpdate: NoAction)
+  
+  @@index([Token, UserId])
+}
