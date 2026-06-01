@@ -6,6 +6,6 @@ import { CreateUserDto } from "../features/User/Commands/CreateUser/CreateUserDt
 const userRouter = Router()
 const userController = new UserController()
 
-userRouter.post("/user", ValidateBody(CreateUserDto), userController.AddUserAsync)
+userRouter.post("/User", ValidateBody(CreateUserDto), userController.AddUserAsync)
 
 export default userRouter

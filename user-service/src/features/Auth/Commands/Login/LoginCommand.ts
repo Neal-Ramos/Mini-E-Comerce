@@ -1,3 +1,4 @@
+import { GetPHTime } from "../../../../helpers/GetPHTime.js";
 import { VerifyHashedString } from "../../../../helpers/VerifyHashedString.js";
 import { RefreshTokenRepository } from "../../../../repositories/RefreshTokenRepository.js";
 import { UserRepository } from "../../../../repositories/UserRepository.js";
@@ -17,8 +18,16 @@ export class LoginCommand{
             !VerifyHashedString(data.Password, User.Password)
         ) throw new CustomError("Email and Password Does not Match", 401)
 
+        const dateNow = GetPHTime()
+        const expiresAt = new Date(dateNow)
+        expiresAt.setDate(expiresAt.getDate() + 1);
+        
         return {
-            refreshToken: (await this._refreshTokenRepository.AddAsync(User.UserId)).Token,
+            refreshToken: (await this._refreshTokenRepository.AddAsync(
+                User.UserId,
+                expiresAt,
+                dateNow
+            )).Token,
             accessToken: await this._tokenService.CreateLoginToken({UserId: User.UserId})
         }
     }
