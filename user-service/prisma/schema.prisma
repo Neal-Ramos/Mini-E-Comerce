@@ -28,6 +28,7 @@ model RefreshToken {
   ExpiryDate DateTime
   DateCreated DateTime
   UserId String?
+  IsRevoked Boolean @default(false)
   User User? @relation(fields: [UserId], references: [UserId], onDelete: SetNull, onUpdate: NoAction)
   
   @@index([Token, UserId])

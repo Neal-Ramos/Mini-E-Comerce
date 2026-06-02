@@ -6,7 +6,7 @@ export class CreateUserDto {
     FirstName: string;
 
     @IsOptional()
-    MiddleName?: string | null | undefined;
+    MiddleName?: string|null ;
 
     @IsString()
     @IsNotEmpty()
