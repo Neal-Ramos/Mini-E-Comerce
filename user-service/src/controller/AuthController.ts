@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { LoginCommand } from "../features/Auth/Commands/Login/LoginCommand.js";
 import { RotateTokenCommand } from "../features/Auth/Commands/RotateToken/RotateTokenCommand.js";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import { LogoutCommand } from "../features/Auth/Commands/Logout/LogoutCommand.js";
 
 export class AuthController{
     async Login(req: Request, res: Response, next: NextFunction){
@@ -37,6 +38,22 @@ export class AuthController{
                 res.status(401).json({ message: 'Invalid token' })
                 return
             }
+            next(error)
+        }
+    }
+    async Logout(req: Request, res: Response, next: NextFunction){
+        try {
+            const refreshToken = req.headers.authorization?.replace("Bearer ", "")
+            if(!refreshToken){
+                res.status(401).json({message: "Unauthorized"})
+                return
+            }
+
+            await new LogoutCommand().execute(refreshToken)
+
+            res.clearCookie("RefreshToken")
+            res.status(200).json({message: "Logout"})
+        } catch (error) {
             next(error)
         }
     }

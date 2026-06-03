@@ -10,7 +10,6 @@ const authController = new AuthController()
 
 authRouter.post("/Login", ValidateBody(LoginDto), authController.Login)
 authRouter.post("/RotateToken", AuthenticateUser, ValidateBody(RotateTokenDto), authController.RotateToken)
-authRouter.post("/Logout")
-authRouter.post("/VerifyAccessToken")
+authRouter.post("/Logout", AuthenticateUser, authController.Logout)
 
 export default authRouter

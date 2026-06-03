@@ -47,6 +47,7 @@ export class UserController{
             }
             
             const result = await new DeleteUserCommand().execute(UserId, refreshToken)
+            res.clearCookie("RefreshToken")
             res.status(200).json({data: result, message: "Account Deleted"})
         } catch (error) {
             next(error)
