@@ -8,9 +8,9 @@ namespace Application.common.Interface
         Task<Files> AddAsync(
             UploadFileDto File
         );
-        Task<Files> AddManyAsync(
-            IEnumerable<UploadFileDto> Files
+        Task<IEnumerable<Files>> AddManyAsync(
+            IEnumerable<UploadFileDto> NewFiles
         );
-        Task<Files?> GetByProductId(Guid ProductId);
+        Task<IEnumerable<Files>> GetByProductId(Guid ProductId);
     }
 }

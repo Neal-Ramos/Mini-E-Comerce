@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infra.persistence
 {
-    public class ProductServiceDbContext: DbContext, IProductService
+    public class ProductServiceDbContext: DbContext, IProductServiceDb
     {
         public ProductServiceDbContext(DbContextOptions<ProductServiceDbContext> options): base(options)
         {
