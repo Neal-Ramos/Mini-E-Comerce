@@ -16,7 +16,10 @@ namespace Application.common.Interface
         Task<IEnumerable<Products>> GetProducts(
             int Page,
             int PageSize,
-            string Search
+            string? Search
+        );
+        Task<int> GetTotalCount(
+            string? Search
         );
     }
 }

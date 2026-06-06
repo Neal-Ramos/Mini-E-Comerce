@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Infra.services.AWS3Service;
 using Application.common.IService;
 using Amazon.S3;
+using Application.common.Interface;
+using Infra.respository;
 
 namespace Infra
 {
@@ -42,7 +44,12 @@ namespace Infra
                     config
                 );
             });
+            services.AddScoped<IProductServiceDb, ProductServiceDbContext>();
+
             services.AddScoped<IUploadFileService, S3Service>();
+
+            services.AddScoped<IProductsRepository, ProductRepository>();
+            services.AddScoped<IFilesRepository, FilesRepository>();
 
             return services;
         }

@@ -18,12 +18,12 @@ namespace Infra.respository
         }
 
         public async Task<Files> AddAsync(
-            UploadFileDto File
+            UploadFileResDto File
         )
         {
             var newFile = new Files
             {
-                DocumentName = File.DocumentName,
+                DocumentName = File.Name,
                 FileName = File.FileName,
                 ContentType = File.ContentType,
                 Format = File.Format,
@@ -35,7 +35,7 @@ namespace Infra.respository
             return newFile;
         }
         public async Task<IEnumerable<Files>> AddManyAsync(
-            IEnumerable<UploadFileDto> NewFiles
+            IEnumerable<UploadFileResDto> NewFiles
         )
         {
             var newFile = new List<Files>();
@@ -43,7 +43,7 @@ namespace Infra.respository
             {
                 newFile.Add(new Files
                 {
-                    DocumentName = File.DocumentName,
+                    DocumentName = File.Name,
                     FileName = File.FileName,
                     ContentType = File.ContentType,
                     Format = File.Format,

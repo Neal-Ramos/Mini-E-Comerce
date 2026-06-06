@@ -3,7 +3,6 @@ using Amazon.S3.Model;
 using Application.common.DTOs;
 using Application.common.IService;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Infra.services.AWS3Service
 {
@@ -27,14 +26,15 @@ namespace Infra.services.AWS3Service
             };
         }
         
-        public async Task<IEnumerable<UploadFileDto>> UploadManyAsync(
-            List<UploadFileReqDto> Files
+        public async Task<List<UploadFileResDto>> UploadManyAsync(
+            IEnumerable<UploadFileDto> Files,
+            Guid ProductId
         )
         {
-            var result = new List<UploadFileDto>();
+            var result = new List<UploadFileResDto>();
             foreach(var file in Files)
             {
-                var key = $"{Guid.NewGuid()}_{file.FileName}_{file.ProductId}";
+                var key = $"{Guid.NewGuid()}_{file.FileName}_{ProductId}";
 
                 var req = new PutObjectRequest
                 {
@@ -45,15 +45,14 @@ namespace Infra.services.AWS3Service
                 };
 
                 await _amazonS3.PutObjectAsync(req);
-
-                result.Add(new UploadFileDto
+                result.Add(new UploadFileResDto
                 {
-                    DocumentName = file.DocumentName,
+                    Name = file.Name,
                     FileName = file.FileName,
                     ContentType = file.ContentType,
                     Format = file.Format,
                     PublicId = key,
-                    ProductId = file.ProductId
+                    ProductId = ProductId
                 });
             }
 

@@ -4,8 +4,9 @@ namespace Application.common.IService
 {
     public interface IUploadFileService
     {
-        Task<IEnumerable<UploadFileDto>> UploadManyAsync(
-            List<UploadFileReqDto> Files
+        Task<List<UploadFileResDto>> UploadManyAsync(
+            IEnumerable<UploadFileDto> Files,
+            Guid ProductId
         );
     }
 }

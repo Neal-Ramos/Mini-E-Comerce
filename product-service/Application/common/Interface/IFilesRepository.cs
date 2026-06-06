@@ -6,10 +6,10 @@ namespace Application.common.Interface
     public interface IFilesRepository
     {
         Task<Files> AddAsync(
-            UploadFileDto File
+            UploadFileResDto File
         );
         Task<IEnumerable<Files>> AddManyAsync(
-            IEnumerable<UploadFileDto> NewFiles
+            IEnumerable<UploadFileResDto> NewFiles
         );
         Task<IEnumerable<Files>> GetByProductId(Guid ProductId);
     }

@@ -53,5 +53,14 @@ namespace Infra.respository
                 .Take(PageSize)
                 .ToListAsync();
         }
+        public async Task<int> GetTotalCount(
+            string? Search
+        )
+        {
+            var query = _productServiceDbContext.Products.AsQueryable();
+
+            if(Search != null) query = query.Where(p => p.Title.StartsWith(Search));
+            return await query.CountAsync();
+        }
     }
 }

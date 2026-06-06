@@ -36,24 +36,10 @@ namespace Application.features.Commands.AddProduct
                 Price: req.Price,
                 DateCreated: new DateTime()
             );
-            var toUpload = new List<UploadFileReqDto>{};
-            foreach(var file in req.Files)
-            {
-                toUpload.Add(new UploadFileReqDto
-                {
-                    ProductId = product.ProuctId,
-                    FolderName = file.FolderName,
-                    DocumentName = file.DocumentName,
-                    FileName = file.FileName,
-                    ContentType = file.ContentType,
-                    Format = file.Format,
-                    Stream = file.Stream
-                });
-            }
-            var uploadResult = await _uploadFileService.UploadManyAsync(toUpload);
+            var uploadResult = await _uploadFileService.UploadManyAsync(req.Files, product.ProuctId);
             await _filesRepository.AddManyAsync(uploadResult);
 
-            await _productServiceDb.SaveChangesAsync();
+            await _productServiceDb.SaveChangesAsync(cancellationToken);
             return new ProductsDto{};
         }
     }
