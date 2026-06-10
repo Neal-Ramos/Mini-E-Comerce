@@ -1,6 +1,7 @@
 using API.common.Responses;
 using Application.common.DTOs;
 using Application.features.Commands.AddProduct;
+using Application.features.Queries.GetProductById;
 using Application.features.Queries.GetProducts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -57,11 +58,19 @@ namespace API.controllers
         }
         [HttpGet]
         public async Task<IActionResult> GetProducts(
-            GetProductsQuery req,
+            [FromQuery] int Page,
+            [FromQuery] int PageSize,
+            [FromQuery] string Search,
             CancellationToken cancellationToken
         )
         {
-            var result = await _mediator.Send(req, cancellationToken);
+            var query = new GetProductsQuery
+            {
+                Page = Page,
+                PageSize = PageSize,
+                Search = Search
+            };
+            var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new APIResponse<object>
             {
@@ -71,6 +80,22 @@ namespace API.controllers
                     ["Total"] = result.Total,
                     ["TotalPage"] = result.TotalPage
                 }
+            });
+        }
+        [HttpGet("/:ProductId")]
+        public async Task<IActionResult> GetProductByPRoductId(
+            [FromRoute] Guid ProductId,
+            CancellationToken cancellationToken
+        )
+        {
+            var query = new GetProductByIdQuery{
+                ProductId= ProductId
+            };
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new APIResponse<object>
+            {
+                Data = result
             });
         }
     }
