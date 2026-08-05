@@ -1,14 +1,16 @@
 import dotenv from "dotenv";
 dotenv.config()
-import Express, { type Response } from "express";
+import Express from "express";
+import OrderRouter from "./routes/OrderRoutes.js";
+import { ErrorHandler } from "./middleware/ErrorHandler.js";
 
 const app = Express();
 const port = process.env.PORT!
 
-app.use("/", (res: Response) => {
-    res.send(`Running on port ${port}`)
-})
+app.use("/api", OrderRouter)
+
+app.use(ErrorHandler)
 
 app.listen(port, () => {
-    console.log(`Running on port ${port}`)
+    console.log(`Running on http://localhost:${port}`)
 })
