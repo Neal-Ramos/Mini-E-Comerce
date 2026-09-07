@@ -9,10 +9,10 @@ generator client {
 }
 
 model Order {
-  Id Int @unique @default(autoincrement())
-  OrderId String @unique @default(uuid())
-  UserId String
-  ProductId String
+  Id          Int      @unique @default(autoincrement())
+  OrderId     String   @unique @default(uuid())
+  UserId      String
+  ProductId   String
   DateCreated DateTime
 }
 

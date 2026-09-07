@@ -1,10 +1,7 @@
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../generated/prisma/client.js";
+import { PrismaClient } from "@prisma/client/scripts/default-index.js"
 
 export class RefreshTokenRepository{
-    private prisma = new PrismaClient({
-        adapter: new PrismaPg({connectionString: process.env.DATABASE_URL})
-    })
+    private prisma = new PrismaClient()
     
     async AddAsync(UserId: string, ExpiryDate: Date, DateCreated: Date){
         return await this.prisma.refreshToken.create({
