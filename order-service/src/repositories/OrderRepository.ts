@@ -3,7 +3,7 @@ import { PrismaClient } from "../generated/prisma/index.js";
 export class OrderRepository{
     private prisma = new PrismaClient()
 
-    public async CreateAsync(
+    public async CreateOrder(
         UserId: string,
         ProductId: string,
         DateCreated: Date
