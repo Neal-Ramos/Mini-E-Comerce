@@ -1,7 +1,5 @@
-import express, { Response } from "express";
+import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import { ConnectProducer } from "./kafka";
-await ConnectProducer()
 dotenv.config();
 
 const app = express()

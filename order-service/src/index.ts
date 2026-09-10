@@ -1,8 +1,8 @@
-import dotenv from "dotenv";
-dotenv.config()
 import Express, { type Request, type Response } from "express";
 import OrderRouter from "./routes/OrderRoutes.js";
 import { ErrorHandler } from "./middleware/ErrorHandler.js";
+import dotenv from "dotenv";
+dotenv.config()
 
 const app = Express();
 const port = process.env.PORT!
